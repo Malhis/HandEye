@@ -41,6 +41,6 @@ It's a two phase process, training the classifier using some training sample pic
 ****
 
 **Contributors:**
-
+ 
 * Husam Bilal (http://github.com/husam212)
 * Zaid Malhis (http://github.com/Malhis)
