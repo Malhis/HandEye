@@ -36,4 +36,11 @@ It's a two phase process, training the classifier using some training sample pic
   Same as above but it will use the first addressed webcam feed as input. You should see a window showing the webcam feed overlaid with the result.
   
   
-  Take a look at the *gestures* included to see the directory hierarchy needed to train the classifier
+  Take a look at the *gestures* included to see the directory hierarchy needed to train the classifier.
+  
+****
+
+**Contributors:**
+
+* Husam Bilal (http://github.com/husam212)
+* Zaid Malhis (http://github.com/Malhis)
