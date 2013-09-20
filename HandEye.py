@@ -155,46 +155,48 @@ def testMe(directory, model, classes):
         print('%s => %s' %(file_dir, classes[model.apply(getFVector(image))-1]))
 
 
-try:
-    if len(argv) < 3:
-        raise Exception()
-    opts, args = getopt(argv[1:], 't:i:')
-except:
-    print('Wrong parameters!\n-t\tTraining directory\n-i\tInput directory or "cam" for camera')
-    exit(0)
+if __name__ == '__main__':
 
-for opt, arg in opts:
-    if opt == '-t':
-        train_dir = arg
-    elif opt == '-i':
-        input_dir = arg
-
-model, classes = trainMe(train_dir)
-
-if input_dir == 'cam':
-    cv.namedWindow('HandEye')
-    print('[+] Initializing cam input')
-    capture = cv.VideoCapture(1)
-    while True:
-        retval, image = capture.read()
-        image = resizeImage(image, width=500)
-        try:
-            binary_image = getSkin(image)
-            contour = getContour(binary_image)
-            if cv.contourArea(contour) < 10000:
-                raise Exception()
-            approx_contour, convex_defects = getDefects(contour)
-            features = getFVector(image)
-            image = drawImage(image, approx_contour, convex_defects, classes[model.apply(features)-1])
-            cv.imshow('HandEye', image)
-            key = cv.waitKey(10)
-            if key == 1048603:
-                break
-        except:
-            cv.putText(image, 'Nothing!', (10,70), cv.FONT_HERSHEY_SIMPLEX, 2, (0,0,0), 2, cv.CV_AA)
-            cv.imshow('HandEye', image)
-            key = cv.waitKey(10)
-            if key == 1048603:
-                break
-else:
-    testMe(input_dir, model, classes)
+    try:
+        if len(argv) < 3:
+            raise Exception()
+        opts, args = getopt(argv[1:], 't:i:')
+    except:
+        print('Wrong parameters!\n-t\tTraining directory\n-i\tInput directory or "cam" for camera')
+        exit(0)
+    
+    for opt, arg in opts:
+        if opt == '-t':
+            train_dir = arg
+        elif opt == '-i':
+            input_dir = arg
+    
+    model, classes = trainMe(train_dir)
+    
+    if input_dir == 'cam':
+        cv.namedWindow('HandEye')
+        print('[+] Initializing cam input')
+        capture = cv.VideoCapture(1)
+        while True:
+            retval, image = capture.read()
+            image = resizeImage(image, width=500)
+            try:
+                binary_image = getSkin(image)
+                contour = getContour(binary_image)
+                if cv.contourArea(contour) < 10000:
+                    raise Exception()
+                approx_contour, convex_defects = getDefects(contour)
+                features = getFVector(image)
+                image = drawImage(image, approx_contour, convex_defects, classes[model.apply(features)-1])
+                cv.imshow('HandEye', image)
+                key = cv.waitKey(10)
+                if key == 1048603:
+                    break
+            except:
+                cv.putText(image, 'Nothing!', (10,70), cv.FONT_HERSHEY_SIMPLEX, 2, (0,0,0), 2, cv.CV_AA)
+                cv.imshow('HandEye', image)
+                key = cv.waitKey(10)
+                if key == 1048603:
+                    break
+    else:
+        testMe(input_dir, model, classes)
